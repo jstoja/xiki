@@ -86,5 +86,20 @@ module Xiki
       #     : load "#{Xiki.menu_path_core_dir}/conf/conf_index.rb"
 
     end
+
+    def self.parse(text)
+      conf = Hash.new
+      text.each_line do |line|
+        if line[0] != '>' then
+          if line[0] == '-' then line[0] = ' ' end
+          line.lstrip!
+          param = line.split ':'
+          unless param.empty? then
+            conf[param[0].strip] = param[1].strip
+          end
+        end
+      end
+      conf
+    end
   end
 end
